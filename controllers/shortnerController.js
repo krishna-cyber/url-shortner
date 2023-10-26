@@ -53,7 +53,24 @@ async function handleRedirect(req, res) {
   //redirect the user to the url
   return res.redirect(url.redirectURL);
 }
+async function getAllUrls(req, res) {
+  const urls = await URL.find({});
+
+  if (!urls) {
+    return res.status(404).json({
+      status: "error",
+      error: "URL not found",
+    });
+  }
+
+  return res.status(200).json({
+    status: "success",
+    urls,
+  });
+}
+
 module.exports = {
   handleRequest,
   handleRedirect,
+  getAllUrls,
 };
